@@ -10,7 +10,10 @@
     "build:prod": "webpack --config webpack-prod.config.js",
     "build:dev": "webpack",
     "start": "npm-run-all test build:dev server",
-    "clean-build:dev": "rimraf ./build && mkdir build"
+    "clean-build:dev": "rimraf ./build && mkdir build",
+    "prebuild:dev": "npm-run-all test clean-build:dev",
+    "postbuild:dev": "npm run server",
+    "build:watch": "webpack --watch"
   },
   "dependencies": {
     "angular": "^1.3.10",

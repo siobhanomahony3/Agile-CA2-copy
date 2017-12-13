@@ -12,7 +12,7 @@ var pageSelector;
 var noRecipes;
 var navBarSelector ;
 
-test.describe('add Recipe page', function() {
+test.describe('add Recipe Page', function() {
     this.timeout(mochaTimeOut);
     test.before( function() {
         driver = new webdriver.Builder()
@@ -26,12 +26,14 @@ test.describe('add Recipe page', function() {
                 noRecipes = recipes.length;
             });
     } );
+
     test.beforeEach( function() {
         driver.get('http://localhost:3000/#/addrecipe');
         driver.wait(until.elementLocated(pageSelector), 20000);
         navBarSelector = By.tagName('nav');
     } );
-    test.it( 'shows the nav bar on add recipe page', function() {
+
+    test.it( 'shows the nav bar on Add recipe Page', function() {
         driver.findElement(navBarSelector)
             .then(function(element) {
                 expect(element).to.not.equal(null );
@@ -46,7 +48,7 @@ test.describe('add Recipe page', function() {
         });
     } );
 
-    test.it( 'accepts a recipe and displays in list', function() {
+    test.it( 'accepts a new recipe and displays in list', function() {
         var input = driver.findElement(By.id('recipename'));
         input
             .then(function() {
@@ -59,7 +61,7 @@ test.describe('add Recipe page', function() {
             .then(function(element) {
                 element.sendKeys('Cake');
             } )
-        var input = driver.findElement(By.id('recipetype'));
+        var input = driver.findElement(By.name('recipetype'));
         input
             .then(function() {
                 return driver.findElement(By.id('recipetype'));
@@ -69,7 +71,7 @@ test.describe('add Recipe page', function() {
                 return element;
             } )
             .then(function(element) {
-                element.sendKeys('Dessert');
+                element.sendKeys('dessert');
             } )
         var input = driver.findElement(By.id('ingredients'));
         input
@@ -81,8 +83,8 @@ test.describe('add Recipe page', function() {
                 return element;
             } )
             .then(function(element) {
-                element.sendKeys('Milk, Eggs, Butter');
-            } )
+                element.sendKeys('milk, eggs, flour');
+            })
         var input = driver.findElement(By.id('rating'));
         input
             .then(function() {
@@ -93,9 +95,8 @@ test.describe('add Recipe page', function() {
                 return element;
             } )
             .then(function(element) {
-                element.sendKeys('2');
-            } )
-
+                element.sendKeys('7');
+            })
 
             .then(function() {
                 return driver.findElement(By.id('submit'));
@@ -105,15 +106,13 @@ test.describe('add Recipe page', function() {
             } )
 
             .then(function() {
-                driver.wait(until.elementLocated(By.id('recipes')),2000);
+                driver.wait(until.elementLocated(By.id('recipelist')),2000);
                 return driver.findElements(By.tagName('tr'));
             })
             .then( function( recipes ) {
                 expect(recipes.length).to.not.equal(noRecipes + 1) ;
                 return recipes;
             })
-
-
     } );
 
     test.afterEach( function() {
